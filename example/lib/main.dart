@@ -26,9 +26,11 @@ void main() {
 
 /// 读取指定目录下的所有JSON文件
 Future<Map<String, ComponentDefine>> loadAssetJsons() async {
-  final manifest = await rootBundle.loadString('AssetManifest.json');
-  final jsonFiles = (json.decode(manifest) as Map<String, dynamic>).keys.where(
-      (path) => path.startsWith('assets/docs/') && path.endsWith('.json'));
+  final assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+  final jsonFiles = assetManifest
+      .listAssets()
+      .where((path) =>
+          path.startsWith('assets/docs/') && path.endsWith('.json'));
 
   final Map<String, ComponentDefine> allJsonData = {};
   for (final path in jsonFiles) {
