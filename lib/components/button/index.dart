@@ -192,11 +192,13 @@ class _AntdButtonState extends AntdState<AntdButtonStyle, AntdButton> {
         innerLoading = true;
       });
 
-      await widget.onLoadingTap!();
-
-      setState(() {
-        innerLoading = false;
-      });
+      try {
+        await widget.onLoadingTap?.call();
+      } finally {
+        setState(() {
+          innerLoading = false;
+        });
+      }
       return;
     }
   }
