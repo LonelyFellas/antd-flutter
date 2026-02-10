@@ -137,12 +137,12 @@ class _AppState extends State<App> {
           body: AntdProvider(
             theme: const AntdTheme(mode: AntdThemeMode.light),
             builder: (context, theme) {
+              final initialRoute = Uri.base.queryParameters['target'] ??
+                  menus.firstWhereOrNull((value) => value.group == false)?.path;
               return Layout(
-                key: ValueKey(menus
-                        .firstWhereOrNull((value) => value.group == false)
-                        ?.path ??
-                    ""),
+                key: ValueKey(initialRoute),
                 title: "Antd Flutter Mobile",
+                initialRoute: initialRoute,
                 menus: menus,
                 child: {...panels, "token": const AntdToken()},
               );

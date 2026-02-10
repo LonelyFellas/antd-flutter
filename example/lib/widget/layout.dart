@@ -19,10 +19,13 @@ class Layout extends StatefulWidget {
 
   final List<Menu> menus;
 
+  final String? initialRoute;
+
   final Map<String, Widget> child;
 
   const Layout(
       {super.key,
+      this.initialRoute,
       required this.title,
       required this.menus,
       required this.child});
@@ -38,15 +41,8 @@ class _LayoutState extends State<Layout> {
 
   @override
   Widget build(BuildContext context) {
-    // 获取初始路由
-    final initialRoute = Uri.base.queryParameters;
     return Navigator(
-      initialRoute: initialRoute.containsKey('target')
-          ? initialRoute['target']
-          : widget.menus
-              .where((value) => value.group == false)
-              .firstOrNull
-              ?.path,
+      initialRoute: widget.initialRoute,
       observers: [AntdLayer.observer],
       onGenerateRoute: (setting) {
         return MaterialPageRoute(
