@@ -43,7 +43,10 @@ class _LayoutState extends State<Layout> {
     return Navigator(
       initialRoute: initialRoute.containsKey('target')
           ? initialRoute['target']
-          : widget.menus.where((value) => value.group == false).first.path,
+          : widget.menus
+              .where((value) => value.group == false)
+              .firstOrNull
+              ?.path,
       observers: [AntdLayer.observer],
       onGenerateRoute: (setting) {
         return MaterialPageRoute(

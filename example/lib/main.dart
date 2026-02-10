@@ -27,10 +27,8 @@ void main() {
 /// 读取指定目录下的所有JSON文件
 Future<Map<String, ComponentDefine>> loadAssetJsons() async {
   final assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-  final jsonFiles = assetManifest
-      .listAssets()
-      .where((path) =>
-          path.startsWith('assets/docs/') && path.endsWith('.json'));
+  final jsonFiles = assetManifest.listAssets().where(
+      (path) => path.startsWith('assets/docs/') && path.endsWith('.json'));
 
   final Map<String, ComponentDefine> allJsonData = {};
   for (final path in jsonFiles) {
@@ -140,6 +138,10 @@ class _AppState extends State<App> {
             theme: const AntdTheme(mode: AntdThemeMode.light),
             builder: (context, theme) {
               return Layout(
+                key: ValueKey(menus
+                        .firstWhereOrNull((value) => value.group == false)
+                        ?.path ??
+                    ""),
                 title: "Antd Flutter Mobile",
                 menus: menus,
                 child: {...panels, "token": const AntdToken()},
